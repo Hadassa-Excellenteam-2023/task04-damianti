@@ -1,27 +1,27 @@
 Data structures used in the exercise:
-std::vector<City> m_cities: I chose to use a std::vector of City. Each City is a struct that has a name (std::sting) 
-and a Location. Location is a struct that has two double variables for the location.
-This vector stores all the city data read from the file. The program uses a vector because it provides efficient access 
-to elements in any order. I thought about using std::map or std::unordered_map, in order to do searching in a better runtime,
-but the searching is only done when the user inputs a name of a city. Everywhere else, the program has to check every element of
-the file in order to know if its inside the radio. So the runtime was not affected in a hard way.
+std::unordered_map<std::string, Location> (cityMap): This was chosen to map city names to 
+their corresponding Location objects. An unordered map was used because the order of the 
+elements is not important in this context. It provides O(1) average time complexity for 
+lookups and insertions which is beneficial for performance. Also, it allows us to easily 
+and quickly find a city by its name.
 
+std::multimap<Location, std::string, xSort> xMap and 
+std::multimap<Location, std::string, ySort> yMap: Multimaps were chosen to enable an efficient 
+way to find cities within a range based on their x and y coordinates. It was needed to use a 
+multimap instead of a regular map because there can be multiple cities with the same x or y coordinate.
+The custom comparators xSort and ySort were used to sort the multimaps based on the x and y coordinates respectively.
 
-std::map<int, std::function<double(const Location&, const Location&)>> menu:
-This map is used to map integers (the user's choice of norm) to corresponding distance functions. A map is used here because 
-it provides an efficient key-value mapping, allowing easy access to the distance functions based on the user's input.
+std::vector<std::pair<Location, std::string>> closeCities, xRange, yRange: These were chosen 
+for storing the cities within certain x and y range, and finally, the cities within the radius. 
+The vector is a good choice for this purpose because it allows for easy sorting.
+We needed to do intersection of xMap and yMap and that is not possible to do in a map, so
+a vector was needed here.
 
-std::vector<City> closeCities:
-This vector is used to store the cities that are within a certain radius of a given city.
-A vector is used because its the same data structure than the m_cities
+std::map<int, std::function<double(const Location&, const Location&)>> (menu): This map was chosen 
+to map the norm types (0, 1, 2) to their corresponding distance calculating functions. 
+The reason to use a map here is to provide an O(logN) lookup and also maintain the sorting order, 
+which could be beneficial for future expansions where more norms might be added.
 
-std::istringstream iss(line):
-This is an input string stream used to parse city coordinates from a line in the file. 
-A string stream provides convenient extraction operators (like >>) for parsing string content.
-
-std::function<double(const Location&, const Location&)> distanceFunc:
-This is a function object, used as a parameter to the searchCitiesInRadius function. 
-It represents a distance function that takes two Location objects and returns a double. 
-The use of std::function allows for any callable entity (function, lambda, etc.) matching the signature to be passed,
-providing flexibility in choosing the distance calculation method.
-
+The selection of these data structures has contributed to making the implementation 
+more efficient and maintainable. By using these specific data structures, 
+the program will handle a large number of cities and queries in a performance-friendly way.

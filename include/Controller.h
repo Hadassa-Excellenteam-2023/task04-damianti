@@ -1,32 +1,22 @@
 #pragma once
-#include <iostream>
-#include <unordered_map>
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <exception>
-#include <stdexcept>
-#include <algorithm>
-#include <iterator>
-#include <unordered_map>
-#include <map>
-#include <fstream>
-#include <sstream>
-#include <functional>
-
 #include "Utilities.h"
 
+ 
 class Controller {
 public:
-	Controller(const std::string& fileName = "data.txt");
-	void run();
-	
+    Controller(const std::string& fileName = "data.txt");
+    void run();
+
 private:
-	void searchCitiesInRadius(const City& center, const double radius,
-		const std::function<double(const Location&, const Location&)>& distanceFunc);
-	City findCity(const std::string& cityName);
-	void printCloseCities(const std::vector<City>& closeCities, const int totalCloseCities, const int totalNorthCities);
-	std::vector<City> m_cities;
+    void findCitiesInRadius(const Location& center, const double radius,
+        const std::function<double(const Location&, const Location&)>& distanceFunc);
+    Location findLocation(const std::string& cityName);
+    void printCloseCities(const std::vector<std::pair<Location, std::string>>& closeCities, 
+        const int totalCloseCities, const int totalNorthCities);
+    
+    std::unordered_map<std::string, Location> cityMap;
+    std::multimap<Location, std::string, xSort> xMap;
+    std::multimap<Location, std::string, ySort> yMap;
 
     std::map<int, std::function<double(const Location&, const Location&)>> menu = {
         {0, [](const Location& a, const Location& b) {
@@ -40,3 +30,4 @@ private:
         }},
     };
 };
+
