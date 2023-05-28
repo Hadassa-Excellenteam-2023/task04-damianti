@@ -12,7 +12,7 @@ private:
         const std::function<double(const Location&, const Location&)>& distanceFunc);
     Location findLocation(const std::string& cityName);
     void printCloseCities(const std::vector<std::pair<Location, std::string>>& closeCities, 
-        const int totalCloseCities, const int totalNorthCities);
+        const size_t totalCloseCities, const __int64 totalNorthCities);
     
     std::unordered_map<std::string, Location> cityMap;
     std::multimap<Location, std::string, xSort> xMap;

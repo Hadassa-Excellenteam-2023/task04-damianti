@@ -153,9 +153,9 @@ void Controller::findCitiesInRadius(const Location& center, const double radius,
 
 	
 	// count cities that are at a northern point than the center
-	auto totalNorthCities = std::count_if(closeCities.begin(), closeCities.end(),
+	__int64 totalNorthCities = std::count_if(closeCities.begin(), closeCities.end(),
 		[&](const std::pair<Location, std::string>& city) {
-			return city.first.y < center.y;
+			return city.first.x < center.x;
 		});
 
 	auto totalCloseCities = closeCities.size();
@@ -183,7 +183,7 @@ Parameters:
 Returns: Nothing (void). It prints information to the console.
 */
 void Controller::printCloseCities(const std::vector<std::pair<Location, std::string>>& closeCities,
-	const int totalCloseCities, const int totalNorthCities){
+	const size_t totalCloseCities, const __int64 totalNorthCities){
 
 	std::cout << "\nSearch results:\n" <<
 		totalCloseCities << " city / cities found in the given radius.\n" <<
